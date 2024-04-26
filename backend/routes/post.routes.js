@@ -2,9 +2,16 @@ const exppress = require('express');
 const router = exppress.Router();
 const auth=require("../middleware/auth")
 
-const {createPost}=require("../controllers/post.js")
+const {  createPost,
+    deletePost,
+    updatePost,
+    getPost
+}=require("../controllers/post.js")
 
 router.post("/create",auth,createPost)
+router.delete("/delete/:postId",auth,deletePost)
+router.put("/update/:postId",auth,updatePost)
+router.get("/get/:postId",auth,getPost)
 
 
 module.exports = router;

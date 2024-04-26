@@ -190,6 +190,7 @@ const generateOTP = async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000); 
     if(user){
       user.otp=otp;
+      user.verify=false;
       await user.save();
     }else{
       await Otp.create({

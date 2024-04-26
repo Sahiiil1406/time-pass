@@ -20,7 +20,7 @@ router.post("/login",loginUser)
 router.get("/logout",logoutUser)
 router.put("/update/:username",auth,updateUser)
       .delete("/delete/:username",auth,deleteUser)
-router.get("get/:username",getUserByusername)
+router.get("/get/:username",auth,getUserByusername)
       
 router.get("/api/allUser",getAllUsers)
 

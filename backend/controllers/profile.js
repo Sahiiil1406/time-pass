@@ -11,28 +11,33 @@ const getUserByusername = async (req, res) => {
         msg: "User NOt found",
       });
     }
-    const follower=await SocialFollow.find({followeeId:req.user._id})
-    const followerCount=follower.length()
-
-    const following=await SocialFollow.find({followerId:req.user._id})
-    const followingCount=following.length()
-
-    const followEachother=await SocialFollow.findOne({
-      followeeId:user._id,
-      followerId:req.user._id
-    })
     
-    let isfollowing=0;
-    if(followEachother){
-      isfollowing=1;
-    }
+    const follower=await SocialFollow.find({followeeId:user._id})
+    const followerCount=follower.length
+    
+
+    const following=await SocialFollow.find({followerId:user._id})
+    const followingCount=following.length
+   // console.log(follower)
+    
+
+   const followUser=await SocialFollow.findOne({
+    followerId:req.user._id,
+    followeeId:user._id
+ }) 
+  //console.log(following)
+  let isFollowing=false
+  if(followUser){
+    isFollowing=true
+  }
+    
 
     return res.status(200).json({
       msg: "User profile fetched successfully",
       followerCount:followerCount,
       followingCount:followingCount,
-      isFollowing:isfollowing,
-      userProfile,
+      isFollowing:isFollowing,
+      user,
     });
   } catch (error) {
     return res.status(400).json({
