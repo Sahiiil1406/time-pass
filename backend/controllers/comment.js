@@ -1,6 +1,8 @@
 const User = require("../models/user.js");
 const SocialLike = require("../models/like.js");
+const SocialPost = require("../models/post.js");
 const SocialComment = require("../models/comment.js");
+const mongoose = require("mongoose");
 
 const addComment = async (req, res) => {
   try {
@@ -10,7 +12,7 @@ const addComment = async (req, res) => {
     const comment = await SocialComment.create({
       postId,
       content,
-      user: req.user._id,
+      author: req.user._id,
     });
     return res.status(200).json({
       comment,
@@ -60,7 +62,45 @@ const updateComment = async (req, res) => {
   }
 };
 
-const getPostComments = async (req, res) => {};
+const getPostComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    console.log(postId);
+    const id=new mongoose.Types.ObjectId(postId);
+    console.log(id);
+    const comments = await SocialComment.aggregate(
+      [
+        {
+          '$match': {
+            'postId': id
+          }
+        }, {
+          '$lookup': {
+            'from': 'users', 
+            'localField': 'author', 
+            'foreignField': '_id', 
+            'as': 'user'
+          }
+        }, {
+          '$project': {
+            'content': 1, 
+            'user': 1
+          }
+        }
+      ]
+    )
+    return res.status(200).json({
+      info,
+      msg: "Comments Fetched Successfully",
+    });
+    
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      msg: "Comments Not Fetched Successfully",
+    });
+  }
+};
 
 module.exports = {
   addComment,
