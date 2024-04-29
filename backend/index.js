@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors=require("cors");
 const connectDB = require("./config/database");
+const expressValidator = require("express-validator");
+const cookieParser = require("cookie-parser");
 //const connectRedis = require("./config/redis");
 const userRouter=require("./routes/user.routes")
 const postRouter=require("./routes/post.routes")
@@ -21,7 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 //cookie-parser
-app.use(require("cookie-parser")());
+app.use(cookieParser());
+//express-validator
+app.use(expressValidator())
 
 
 

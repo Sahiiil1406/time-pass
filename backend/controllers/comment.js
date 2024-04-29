@@ -65,16 +65,14 @@ const updateComment = async (req, res) => {
 const getPostComments = async (req, res) => {
   try {
     const { postId } = req.params;
-    console.log(postId);
-    const id=new mongoose.Types.ObjectId(postId);
-    console.log(id);
     const comments = await SocialComment.aggregate(
       [
         {
           '$match': {
-            'postId': id
+            'postId': new mongoose.Types.ObjectId(postId)
           }
-        }, {
+        },
+       {
           '$lookup': {
             'from': 'users', 
             'localField': 'author', 
@@ -89,8 +87,9 @@ const getPostComments = async (req, res) => {
         }
       ]
     )
+    
     return res.status(200).json({
-      info,
+      comments,
       msg: "Comments Fetched Successfully",
     });
     
