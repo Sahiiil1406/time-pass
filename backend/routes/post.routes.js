@@ -5,13 +5,14 @@ const auth=require("../middleware/auth")
 const {  createPost,
     deletePost,
     updatePost,
-    getPost
+    getPostbyId
 }=require("../controllers/post.js")
 
 router.post("/create",auth,createPost)
 router.delete("/delete/:postId",auth,deletePost)
 router.put("/update/:postId",auth,updatePost)
-router.get("/get/:postId",auth,getPost)
+router.get("/get/:postId",auth,getPostbyId)
+router.get("/get/:username",auth,getPostbyId)
 
 
 module.exports = router;

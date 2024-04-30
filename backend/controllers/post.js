@@ -71,7 +71,7 @@ const updatePost=async(req,res)=>{
     }
 }
 
-const getPost=async(req,res)=>{
+const getPostbyId=async(req,res)=>{
     try {
         const {postId}=req.params
         console.log(postId)
@@ -157,11 +157,34 @@ const getPost=async(req,res)=>{
     }
 }
 
+const getPostOfUser=async(req,res)=>{
+    try {
+        const {username}=req.params
+        const user=await User.findOne({username})
+        if(!user){
+            return res.status(404).json({
+                msg:"User not found"
+            })
+        }
+        const posts=await SocialPost.find({author:user._id})
+        return res.status(200).json({
+            posts,
+            msg:"Posts fetched successfully"
+        })
+    }
+    catch (error) {
+        return res.status(400).json({
+            msg:"Unable to get posts",
+            error
+        })
+    }
+}
 
 
 module.exports = {
     createPost,
     deletePost,
     updatePost,
-    getPost
+    getPostbyId,
+    getPostOfUser
 }

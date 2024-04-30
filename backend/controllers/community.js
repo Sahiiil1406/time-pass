@@ -32,7 +32,7 @@ const updateCommunity = async (req, res) => {
                 msg:"Community doesnot exist"
             })
         
-     if(!community.admin.includes(req.user._id)){
+       if(!community.admin.includes(req.user._id)){
                 return res.status(400).json({
                     msg:"You are not authorized to update this community"
                 })
@@ -81,11 +81,19 @@ const deleteCommunity = async (req, res) => {
         });
     }
 }
+const addorRemoveMember = async (req, res) => {}
+const addorRemoveAdmin = async (req, res) => {}
+const getCommunityMembers = async (req, res) => {}
+const getCommunityAdmins = async (req, res) => {}
+
+
 
 const getCommunity = async (req, res) => {}
 
-module.exports = { createCommunity,
-     updateCommunity, 
+module.exports = { 
+    createCommunity,
+    updateCommunity, 
     deleteCommunity,
-getCommunity};
+    getCommunity
+};
    
