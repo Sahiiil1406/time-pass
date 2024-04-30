@@ -24,10 +24,6 @@ const {
     }=require("../validators/user.validator.js")
 const validate=require("../validators/main.js")
 
-
-
-
-
 router.post("/signup",validateSignup(),validate,signupUser)
 router.post("/login",validateLogin(),validate,loginUser)
 router.get("/logout",logoutUser)
