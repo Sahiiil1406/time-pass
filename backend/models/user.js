@@ -34,7 +34,7 @@ const userSchema = new Schema(
       default: "",
     },
     dob: {
-      type: String,
+      type: Date,
       default: null,
     },
     location:{

@@ -25,7 +25,7 @@ app.use(cors())
 //cookie-parser
 app.use(cookieParser());
 //express-validator
-app.use(expressValidator())
+
 
 
 

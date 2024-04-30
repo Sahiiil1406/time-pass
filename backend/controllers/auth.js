@@ -8,6 +8,7 @@ const Otp = require("../models/otp.js");
 //signupUser
 const signupUser = async (req, res) => {
   try {
+    
     const { email,
         username, 
         password,
@@ -24,8 +25,12 @@ const signupUser = async (req, res) => {
     if (user) {
       return res.json({ msg: "User already exists" });
     }
+    
     const otpModel=await Otp.findOne({email})
-
+    if(!otpModel){
+      return res.json({ msg: "OTP is not generated" });
+    }
+    
     if(!otpModel.verify){
       return res.json({ msg: "OTP is not verified" });
     }
@@ -34,6 +39,7 @@ const signupUser = async (req, res) => {
             throw new ApiError(400, "Avatar file is required")
         }
         const avatar = await uploadOnCloudinary(avatarLocalPath) */
+        console.log("heelo")
     const newUser = await User.create({
       email,
       username,
