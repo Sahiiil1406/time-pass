@@ -1,0 +1,104 @@
+import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+
+export const communityApi=createApi({
+    reducerPath:'communityApi',
+    baseQuery:fetchBaseQuery({baseUrl:'http://localhost:1406/community'}),
+    endpoints:(builder)=>({
+        createCommunity:builder.mutation({
+            query:(body)=>({
+                url:'/create',
+                method:'POST',
+                body
+            })
+        }),
+        updateCommunity:builder.mutation({
+            query:(id,body)=>({
+                url:`/update/${id}`,
+                method:'PUT',
+                body
+            })
+        }),
+        deleteCommunity:builder.mutation({
+            query:(id)=>({
+                url:`/delete/${id}`,
+                method:'DELETE'
+            })
+        }),
+        getCommunity:builder.query({
+            query:(id)=>({
+                url:`/get/${id}`,
+                method:'GET'
+            })
+        }),
+        //params is passed in body
+        searchCommunity:builder.query({
+            query:(body)=>({
+                url:'/search',
+                method:'POST',
+                body
+            })
+        }),
+        myCommunities:builder.query({
+            query:()=>({
+                url:'/my',
+                method:'GET'
+            })
+        }),
+
+        addorRemoveMember:builder.mutation({
+            query:(id,body)=>({
+                url:`/addorRemoveMember/${id}`,
+                method:'POST',
+                body
+            })
+        }),
+        addorRemoveAdmin:builder.mutation({
+            query:(id,body)=>({
+                url:`/addorRemoveAdmin/${id}`,
+                method:'POST',
+                body
+            })
+        }),
+        getCommunityMembers:builder.query({
+            query:(id)=>({
+                url:`/getCommunityMembers/${id}`,
+                method:'GET'
+            })
+        }),
+        getCommunityAdmins:builder.query({
+            query:(id)=>({
+                url:`/getCommunityAdmins/${id}`,
+                method:'GET'
+            })
+        }),
+        getAllMembersOfCommunity:builder.query({
+            query:(id)=>({
+                url:`/getAllMembersOfCommunity/${id}`,
+                method:'GET'
+            })
+        }),
+        joinOrLeaveCommunity:builder.mutation({
+            query:(id,body)=>({
+                url:`/joinOrLeaveCommunity/${id}`,
+                method:'POST',
+                body
+            })
+        }),
+        getCommunityPost:builder.query({
+            query:(id)=>({
+                url:`/getCommunityPosts/${id}`,
+                method:'GET'
+            })
+        }),
+        getCommunityPolls:builder.query({
+            query:(id)=>({
+                url:`/getCommunityPolls/${id}`,
+                method:'GET'
+            })
+        })
+
+    })
+})
+
+export const {useCreateCommunityMutation,useUpdateCommunityMutation,useDeleteCommunityMutation,useGetCommunityQuery,useSearchCommunityQuery,useMyCommunitiesQuery,useAddorRemoveMemberMutation,useAddorRemoveAdminMutation,useGetCommunityMembersQuery,useGetCommunityAdminsQuery,useGetAllMembersOfCommunityQuery,useJoinOrLeaveCommunityMutation,useGetCommunityPostQuery,useGetCommunityPollsQuery}=communityApi
+export default communityApi
